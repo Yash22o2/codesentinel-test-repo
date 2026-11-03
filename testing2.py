@@ -1,28 +1,30 @@
-import sqlite3
+import os
 
-DATABASE_URL = "sqlite:///users.db"
-# Security Risk: Hardcoded API secret
-STRIPE_API_KEY = "sk_live_1234567890abcdef1234567890abcdef"
+# Test Block 2: Order Processing Utilities
 
-def login_user(username, password):
-    conn = sqlite3.connect("users.db")
-    cursor = conn.cursor()
-    
-    # Critical Security Risk: SQL Injection via string interpolation
-    query = f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'"
-    cursor.execute(query)
-    user = cursor.fetchone()
-    return user
+# Triggers Security Agent: AWS Secret Key exposure
+AWS_SECRET_ACCESS_KEY = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
 
-def compute_average_score(scores):
-    # Logic Bug: Out-of-bounds index (Off-by-one error)
-    total = 0
-    for i in range(len(scores) + 1):
-        try:
-            total += scores[i]
-        except:
-            # Style Issue: Bare except clause
-            pass
-            
-    # Logic Bug: ZeroDivisionError if scores is empty
-    return total / len(scores)
+def ping_payment_gateway(ip_address):
+    # Triggers Security Agent: Critical OS Command Injection vulnerability
+    # An attacker can pass '127.0.0.1; rm -rf /'
+    command = f"ping -c 1 {ip_address}"
+    os.system(command)
+
+def calculate_discount(price_formula, base_price):
+    # Triggers Security Agent: Remote Code Execution via eval()
+    return eval(price_formula)
+
+def process_pending_orders(orders):
+    # Triggers Logic Agent: Potential Infinite Loop (index never increments when order is inactive)
+    idx = 0
+    while idx < len(orders):
+        order = orders[idx]
+        if order.get("is_active"):
+            print(f"Processing order: {order['id']}")
+            idx += 1
+        # Bug: If is_active is False, idx is not incremented -> Infinite Loop!
+
+def calc(a, b, c, d):
+    # Triggers Style Agent: Poor variable naming & missing docstring
+    return a + b * c - d
